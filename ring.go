@@ -20,6 +20,26 @@ func NewIntBuffer(size int) *IntBuffer {
 	return &IntBuffer{sync.Mutex{}, make([]*int, size), size, 0, 0, 0}
 }
 
+// Size - метод, возвращающий размер кольцевого массива
+func (r *IntBuffer) Size() int {
+	return r.size
+}
+
+// Used - метод, возвращающий количество занятых ячеек
+func (r *IntBuffer) Used() int {
+	return r.used
+}
+
+// IsEmpty - Метод, проверяющий кольцо на пустоту
+func (r *IntBuffer) IsEmpty() bool {
+	return r.used == 0
+}
+
+// IsFull - Проверка на полноту, достигнут ли конец буфера
+func (r *IntBuffer) IsFull() bool {
+	return r.used == r.size
+}
+
 // Read - метод чтения элемента
 func (r *IntBuffer) Read() (int, error) {
 	r.m.Lock()
