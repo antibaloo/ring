@@ -80,6 +80,9 @@ func (r *IntBuffer) Output() []int {
 	r.m.Lock()
 	defer r.m.Unlock()
 	res := make([]int, 0)
+	if r.used == 0 {
+		return res
+	}
 	for { // перебираем хранилище от r.read до r.write
 		res = append(res, *r.data[r.read]) // забираем значение
 		r.data[r.read] = nil               // очищаем ячейку
