@@ -61,3 +61,7 @@ func (r *IntBuffer) Output() []int {
 	r.used = 0       // обнуляем кол-во использованных ячеек буфера
 	return res
 }
+
+func (r *IntBuffer) String() string {
+	return "буффер"
+}
