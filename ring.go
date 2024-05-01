@@ -22,21 +22,29 @@ func NewIntBuffer(size int) *IntBuffer {
 
 // Size - метод, возвращающий размер кольцевого массива
 func (r *IntBuffer) Size() int {
+	r.m.Lock()
+	defer r.m.Unlock()
 	return r.size
 }
 
 // Used - метод, возвращающий количество занятых ячеек
 func (r *IntBuffer) Used() int {
+	r.m.Lock()
+	defer r.m.Unlock()
 	return r.used
 }
 
 // IsEmpty - Метод, проверяющий кольцо на пустоту
 func (r *IntBuffer) IsEmpty() bool {
+	r.m.Lock()
+	defer r.m.Unlock()
 	return r.used == 0
 }
 
 // IsFull - Проверка на полноту, достигнут ли конец буфера
 func (r *IntBuffer) IsFull() bool {
+	r.m.Lock()
+	defer r.m.Unlock()
 	return r.used == r.size
 }
 
