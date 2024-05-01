@@ -80,13 +80,15 @@ func (r *IntBuffer) Output() []int {
 	r.m.Lock()
 	defer r.m.Unlock()
 	res := make([]int, 0)
-	for i := r.read; i != r.write; { // перебираем хранилище от r.read до r.write
-		res = append(res, *r.data[i]) // забираем значение
-		r.data[i] = nil               // очищаем ячейку
-		i = (i + 1) % r.size          // переходим  к следующей
+	for { // перебираем хранилище от r.read до r.write
+		res = append(res, *r.data[r.read]) // забираем значение
+		r.data[r.read] = nil               // очищаем ячейку
+		r.read = (r.read + 1) % r.size     // переходим  к следующей
+		if r.read == r.write {             // если сравнялись с указателяем записи, выходим
+			break
+		}
 	}
-	r.read = r.write // оба указателя смотрят на одноу и туже ячейку
-	r.used = 0       // обнуляем кол-во использованных ячеек буфера
+	r.used = 0 // обнуляем кол-во использованных ячеек буфера
 	return res
 }
 
