@@ -72,7 +72,11 @@ func (r *IntBuffer) String() string {
 	res += fmt.Sprintf("Ячейка для записи: %d\n", r.write)
 	res += "Содержимое буфера:\n"
 	for i, el := range r.data {
-		res += fmt.Sprintf("[%d: %d]\n", i, *el)
+		if el != nil {
+			res += fmt.Sprintf("[%d: %d]\n", i, *el)
+		} else {
+			res += fmt.Sprintf("[%d: пусто]\n", i)
+		}
 	}
 	res += "]"
 	return res
