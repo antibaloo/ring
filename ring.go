@@ -66,7 +66,7 @@ func (r *IntBuffer) Read() (int, error) {
 func (r *IntBuffer) Write(v int) error {
 	r.m.Lock()
 	defer r.m.Unlock()
-	if r.used == r.size { // Проверка на заполенность
+	if r.used == r.size { // Проверка на заполненность
 		return fmt.Errorf("буфер полон")
 	}
 	r.data[r.write] = &v             //записываем данные в ячейку
