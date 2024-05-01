@@ -63,5 +63,17 @@ func (r *IntBuffer) Output() []int {
 }
 
 func (r *IntBuffer) String() string {
-	return "буффер"
+	r.m.Lock()
+	defer r.m.Unlock()
+	res := "[\n"
+	res += fmt.Sprintf("Размер: %d\n", r.size)
+	res += fmt.Sprintf("Использовано: %d\n", r.used)
+	res += fmt.Sprintf("Ячейка для чтения: %d\n", r.read)
+	res += fmt.Sprintf("Ячейка для записи: %d\n", r.write)
+	res += "Содержимое буфера:\n"
+	for i, el := range r.data {
+		res += fmt.Sprintf("[%d: %d]\n", i, *el)
+	}
+	res += "]"
+	return res
 }
